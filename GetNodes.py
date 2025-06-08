@@ -28,10 +28,23 @@ headers = {
 }
 targets = []
 
-try:
+driver = input('''
+--- 选择浏览器 ---
+[1] - Microsoft Edge
+[2] - Firefox
+[3] - Google Chrome
+''')
+
+if driver == '1':
     driver = webdriver.Edge()
-except Exception as e:
+elif driver == '2':
+    driver = webdriver.Firefox()
+elif driver == '3':
     driver = webdriver.Chrome()
+else:
+    print('啊？什么意思？')
+    sys.exit()
+
 
 # files
 input_file = "urls.txt"
