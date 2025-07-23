@@ -24,7 +24,7 @@ TRY_LIM = 10 # 获取内容尝试次数
 
 # browse
 headers = {
-    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36 Edg/135.0.0.0'
+    'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0'
 }
 targets = []
 
@@ -35,7 +35,10 @@ driver = input('''
 [3] - Google Chrome
 ''')
 
+
 if driver == '1':
+    options = webdriver.EdgeOptions()
+    options.add_experimental_option('excludeSwitches', ['enable-logging'])
     driver = webdriver.Edge()
 elif driver == '2':
     driver = webdriver.Firefox()
@@ -43,6 +46,7 @@ elif driver == '3':
     driver = webdriver.Chrome()
 else:
     print('啊？什么意思？')
+    input('按下回车以退出...')
     sys.exit()
 
 
@@ -70,14 +74,31 @@ print("Get share urls...")
 for i in range(4):
     tmp = 'https://node.clashnode.cc/uploads/{0}/{1}/{3}-{0}{1}{2}.txt'.format(lt.tm_year, tm_mon, tm_mday, i)
     targets.append(tmp)
+print("freeclashnode.com Finished!")
 
 #2、v2raya.com
 web_url = 'https://v2raya.net/free-nodes/free-v2ray-node-subscriptions.html'
-response = requests.get(web_url, headers = headers).content
-soup = BeautifulSoup(response, 'html.parser')
-# soup = BeautifulSoup(open("untitled.html", encoding='utf-8'), 'lxml')
-for i in soup.find_all(string=re.compile(r'https://.+\..+\.xyz/api/v1/client/subscribe')):
-    targets.append(i)
+
+try_cnt = 1
+while try_cnt <= TRY_LIM:
+    try:
+        driver.get(web_url)
+    except Exception as e:
+        print('[ERROR]', e)
+        print('尝试次数：', try_cnt)
+        print('重试...')
+        time.sleep(1)
+    else:
+        for i in range(4, 17):
+            targets.append(driver.find_element(By.XPATH, 
+                f'//*[@id="article-container"]/figure/table/tbody/tr/td[2]/pre/span[{i}]').text
+            )
+        break
+if try_cnt > TRY_LIM:
+    print('无法连接！')
+    sys.exit(0)
+
+print("v2raya.com Finished!")
     
 for i in targets: print(i)
 # sys.exit(0)
@@ -153,6 +174,8 @@ urls = urls.encode()
 urls = base64.b64encode(urls).decode('unicode_escape')
 
 urls = update_time + urls + "\n```"
+
+print(urls[:25])
 
 with open("README.md", "w", encoding='utf-8') as f:
     f.write(urls)
