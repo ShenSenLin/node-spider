@@ -38,7 +38,7 @@ driver = input('''
 
 if driver == '1':
     options = webdriver.EdgeOptions()
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_experimental_option('excludeSwitches', ['disable-logging'])
     driver = webdriver.Edge()
 elif driver == '2':
     driver = webdriver.Firefox()
