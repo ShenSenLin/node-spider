@@ -37,8 +37,6 @@ driver = input('''
 
 
 if driver == '1':
-    options = webdriver.EdgeOptions()
-    options.add_experimental_option('excludeSwitches', ['disable-logging'])
     driver = webdriver.Edge()
 elif driver == '2':
     driver = webdriver.Firefox()
@@ -78,7 +76,7 @@ print("freeclashnode.com Finished!")
 
 #2、v2raya.com
 web_url = 'https://v2raya.net/free-nodes/free-v2ray-node-subscriptions.html'
-
+# //*[@id="free_subscription_list"]/ul/li[1]/code/text()
 try_cnt = 1
 while try_cnt <= TRY_LIM:
     try:
@@ -89,9 +87,9 @@ while try_cnt <= TRY_LIM:
         print('重试...')
         time.sleep(1)
     else:
-        for i in range(4, 17):
+        for i in range(1, 14):
             targets.append(driver.find_element(By.XPATH, 
-                f'//*[@id="article-container"]/figure/table/tbody/tr/td[2]/pre/span[{i}]').text
+                f'/html/body/div[2]/main/div[1]/article/div/ul/li[{i}]/code').text
             )
         break
 if try_cnt > TRY_LIM:
@@ -179,6 +177,8 @@ print(urls[:25])
 
 with open("README.md", "w", encoding='utf-8') as f:
     f.write(urls)
+    print("README.md 已生成！")
 
 with open("index.html", "w", encoding='utf-8') as f:
     f.write(urls)
+    print("index.html 已生成！")
