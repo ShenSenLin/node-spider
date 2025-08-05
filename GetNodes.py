@@ -37,10 +37,16 @@ driver = input('''
 
 
 if driver == '1':
+    edge_options = webdriver.EdgeOptions()
+    edge_options.headless = True  # 无头模式
     driver = webdriver.Edge()
 elif driver == '2':
+    firefox_options = webdriver.FirefoxOptions()
+    firefox_options.headless = True  # 无头模式
     driver = webdriver.Firefox()
 elif driver == '3':
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.headless = True  # 无头模式
     driver = webdriver.Chrome()
 else:
     print('啊？什么意思？')
