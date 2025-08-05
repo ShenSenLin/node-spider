@@ -39,15 +39,15 @@ driver = input('''
 if driver == '1':
     edge_options = webdriver.EdgeOptions()
     edge_options.headless = True  # 无头模式
-    driver = webdriver.Edge()
+    driver = webdriver.Edge(options = edge_options)
 elif driver == '2':
     firefox_options = webdriver.FirefoxOptions()
     firefox_options.headless = True  # 无头模式
-    driver = webdriver.Firefox()
+    driver = webdriver.Firefox(options = firefox_options)
 elif driver == '3':
     chrome_options = webdriver.ChromeOptions()
     chrome_options.headless = True  # 无头模式
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options = chrome_options)
 else:
     print('啊？什么意思？')
     input('按下回车以退出...')
