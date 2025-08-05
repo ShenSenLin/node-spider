@@ -1,6 +1,7 @@
 import os
 import time
 
+os.system('pip install -r requirements.txt')
 
 while True:
     os.system('python ./GetNodes.py')
