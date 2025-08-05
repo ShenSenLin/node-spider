@@ -38,15 +38,18 @@ driver = input('''
 
 if driver == '1':
     edge_options = webdriver.EdgeOptions()
-    edge_options.headless = True  # 无头模式
+    edge_options.add_argument('--headless')  # 无头模式
+    edge_options.add_argument('--disable-gpu')
     driver = webdriver.Edge(options = edge_options)
 elif driver == '2':
     firefox_options = webdriver.FirefoxOptions()
-    firefox_options.headless = True  # 无头模式
+    firefox_options.add_argument('--headless')  # 无头模式
+    firefox_options.add_argument('--disable-gpu')
     driver = webdriver.Firefox(options = firefox_options)
 elif driver == '3':
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.headless = True  # 无头模式
+    chrome_options.add_argument('--headless')  # 无头模式
+    chrome_options.add_argument('--disable-gpu')
     driver = webdriver.Chrome(options = chrome_options)
 else:
     print('啊？什么意思？')
