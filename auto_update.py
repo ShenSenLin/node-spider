@@ -1,7 +1,7 @@
 import os
 import time
 
-os.system('pip install -r requirements.txt')
+os.system('pip install -r requirements-linux.txt')
 
 while True:
     os.system('python ./GetNodes.py')

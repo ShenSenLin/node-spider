@@ -1,0 +1,8 @@
+beautifulsoup4
+requests
+DateTime
+pytz
+selenium
+EasyProcess
+xvfbwrapper
+pyvirtualdisplay
