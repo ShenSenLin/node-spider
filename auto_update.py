@@ -9,4 +9,4 @@ while True:
     os.system('git commit -m "update"')
     os.system('git push')
 
-    time.sleep(43200)
+    time.sleep(21600)
