@@ -46,11 +46,13 @@ elif driver == '2':
     firefox_options = webdriver.FirefoxOptions()
     firefox_options.add_argument('--headless')  # 无头模式
     firefox_options.add_argument('--disable-gpu')
+    edge_options.add_argument('--ignore-certificate-errors')
     driver = webdriver.Firefox(options = firefox_options)
 elif driver == '3':
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')  # 无头模式
     chrome_options.add_argument('--disable-gpu')
+    edge_options.add_argument('--ignore-certificate-errors')
     driver = webdriver.Chrome(options = chrome_options)
 else:
     print('啊？什么意思？')
@@ -195,18 +197,14 @@ urls = urls[:-1]
 urls = urls.encode()
 urls = base64.b64encode(urls).decode('unicode_escape')
 
-with open("urls.txt", "w", encoding='utf-8') as f:
+with open("index.html", "w", encoding='utf-8') as f:
     f.write(urls)
-    print("urls.txt 已生成！")
+    print("index.html 已生成！")
 
-urls = update_time + urls + "\n```"
+urls = update_time + urls + "\n\n```"
 
 print(urls[:25])
 
 with open("README.md", "w", encoding='utf-8') as f:
     f.write(urls)
     print("README.md 已生成！")
-
-with open("index.html", "w", encoding='utf-8') as f:
-    f.write(urls)
-    print("index.html 已生成！")
