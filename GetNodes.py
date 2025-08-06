@@ -19,7 +19,7 @@ import pytz
 
 # 可调参数
 TRY_LIM = 10 # 获取内容尝试次数
-
+DEBUG = False # 是否开启调试模式
 # browse
 headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0'
@@ -48,8 +48,7 @@ def driver_init(choice : str):
         chrome_options.add_argument('--disable-gpu')
         driver = webdriver.Chrome(options = chrome_options)
     else:
-        print('啊？什么意思？')
-        input('按下回车以退出...')
+        if DEBUG: print('啊？什么意思？')
         sys.exit()
 
 def time_init():
@@ -70,9 +69,9 @@ def urls_init():
     # https://node.clashnode.cc/uploads/2025/01/0-20250121.txt
     for i in range(4):
         tmp = 'https://node.clashnode.cc/uploads/{0}/{1}/{3}-{0}{1}{2}.txt'.format(lt.tm_year, tm_mon, tm_mday, i)
-        print(tmp)
+        if DEBUG: print(tmp)
         targets.append(tmp)
-    print("freeclashnode.com Finished!")
+    if DEBUG: print("freeclashnode.com Finished!")
     
     #2、v2raya.com
     web_url = 'https://v2raya.net/free-nodes/free-v2ray-node-subscriptions.html'
@@ -82,9 +81,9 @@ def urls_init():
         try:
             driver.get(web_url)
         except Exception as e:
-            print('[ERROR]', e)
-            print('尝试次数：', try_cnt)
-            print('重试...')
+            if DEBUG: print('[ERROR]', e)
+            if DEBUG: print('尝试次数：', try_cnt)
+            if DEBUG: print('重试...')
             time.sleep(1)
         else:
             for i in range(1, 14):
@@ -93,18 +92,18 @@ def urls_init():
                 )
             break
     if try_cnt > TRY_LIM:
-        print('无法连接！')
+        if DEBUG: print('无法连接！')
         sys.exit(0)
-    print("v2raya.com Finished!")
+    if DEBUG: print("v2raya.com Finished!")
 
 def get_nodes():
     global urls
 
     # Get share content
-    print("Get share content...")
+    if DEBUG: print("Get share content...")
     j = 0
     for op in targets:
-        print(j, j / len(targets) * 100)
+        if DEBUG: print(j, j / len(targets) * 100)
         j += 1
         # 使用 selenium 获取订阅链接内容
         try_cnt = 1
@@ -112,9 +111,9 @@ def get_nodes():
             try:
                 driver.get(op)
             except Exception as e:
-                print('[ERROR]', e)
-                print('尝试次数：', try_cnt)
-                print('重试...')
+                if DEBUG: print('[ERROR]', e)
+                if DEBUG: print('尝试次数：', try_cnt)
+                if DEBUG: print('重试...')
                 time.sleep(1)
             else:
                 try_cnt = TRY_LIM + 25
@@ -149,17 +148,17 @@ def write_file():
     urls = base64.b64encode(urls).decode('unicode_escape')
     with open("urls.txt", "w", encoding='utf-8') as f:
         f.write(urls)
-        print("urls.txt 已生成！")
+        if DEBUG: print("urls.txt 已生成！")
     
     urls = update_time + urls + "\n```"
-    print(urls[:25])
+    if DEBUG: print(urls[:25])
     with open("README.md", "w", encoding='utf-8') as f:
         f.write(urls)
-        print("README.md 已生成！")
+        if DEBUG: print("README.md 已生成！")
     
     with open("index.html", "w", encoding='utf-8') as f:
         f.write(urls)
-        print("index.html 已生成！")
+        if DEBUG: print("index.html 已生成！")
 
 def main(args):
     global choice
@@ -181,5 +180,4 @@ def main(args):
 
 if __name__ == "__main__":
     main(sys.argv)
-    print("Done!")
-    input('按下回车以退出...')
+    if DEBUG: print("Done!")
