@@ -38,8 +38,9 @@ driver = input('''
 
 if driver == '1':
     edge_options = webdriver.EdgeOptions()
-    edge_options.add_argument('--headless')  # 无头模式
-    edge_options.add_argument('--disable-gpu')
+    # edge_options.add_argument('--headless')  # 无头模式
+    # edge_options.add_argument('--disable-gpu')
+    edge_options.add_argument('--ignore-certificate-errors')
     driver = webdriver.Edge(options = edge_options)
 elif driver == '2':
     firefox_options = webdriver.FirefoxOptions()
@@ -85,10 +86,12 @@ print("freeclashnode.com Finished!")
 
 #2、v2raya.com
 web_url = 'https://v2raya.net/free-nodes/free-v2ray-node-subscriptions.html'
-# //*[@id="free_subscription_list"]/ul/li[1]/code/text()
+# /html/body/div[2]/main/div[1]/article/div/ul/li[1]/code
+# https://www.v2raya.net/free-nodes/free-v2ray-node-subscriptions.html
 try_cnt = 1
 while try_cnt <= TRY_LIM:
     try:
+        print("尝试获取网页...")
         driver.get(web_url)
     except Exception as e:
         print('[ERROR]', e)
@@ -96,11 +99,23 @@ while try_cnt <= TRY_LIM:
         print('重试...')
         time.sleep(1)
     else:
-        for i in range(1, 14):
-            targets.append(driver.find_element(By.XPATH, 
-                f'/html/body/div[2]/main/div[1]/article/div/ul/li[{i}]/code').text
-            )
-        break
+        print("网页获取成功！")
+        print("解析网页...")
+
+        try:
+            for i in range(1, 14):
+                targets.append(driver.find_element(By.XPATH, 
+                    f'/html/body/div[2]/main/div[1]/article/div/ul/li[{i}]/code').text
+                )
+        except Exception as e:
+            print('[ERROR]', e)
+            print('尝试次数：', try_cnt)
+            print('重试...')
+            time.sleep(1)
+            try_cnt += 1
+        else:
+            print("解析成功！")
+            break
 if try_cnt > TRY_LIM:
     print('无法连接！')
     sys.exit(0)
@@ -182,7 +197,7 @@ urls = base64.b64encode(urls).decode('unicode_escape')
 
 with open("urls.txt", "w", encoding='utf-8') as f:
     f.write(urls)
-    print("index.html 已生成！")
+    print("urls.txt 已生成！")
 
 urls = update_time + urls + "\n```"
 
