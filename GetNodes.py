@@ -16,6 +16,7 @@ import time
 import sys
 import re
 import pytz
+import sys
 
 
 # -- init -- #
@@ -28,31 +29,37 @@ headers = {
 }
 targets = []
 
-driver = input('''
+driver_out = '''
 --- 选择浏览器 ---
 [1] - Microsoft Edge
 [2] - Firefox
 [3] - Google Chrome
-''')
+'''
 
+# driver = input(driver_out)
+driver = sys.argv[1] if len(sys.argv) > 1 else '3'
 
+print(driver)
 if driver == '1':
     edge_options = webdriver.EdgeOptions()
     # edge_options.add_argument('--headless')  # 无头模式
     # edge_options.add_argument('--disable-gpu')
     edge_options.add_argument('--ignore-certificate-errors')
+    edge_options.add_argument('--ignore-ssl-errors')
     driver = webdriver.Edge(options = edge_options)
 elif driver == '2':
     firefox_options = webdriver.FirefoxOptions()
     firefox_options.add_argument('--headless')  # 无头模式
     firefox_options.add_argument('--disable-gpu')
     firefox_options.add_argument('--ignore-certificate-errors')
+    firefox_options.add_argument('--ignore-ssl-errors')
     driver = webdriver.Firefox(options = firefox_options)
 elif driver == '3':
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')  # 无头模式
     chrome_options.add_argument('--disable-gpu')
     chrome_options.add_argument('--ignore-certificate-errors')
+    chrome_options.add_argument('--ignore-ssl-errors')
     driver = webdriver.Chrome(options = chrome_options)
 else:
     print('啊？什么意思？')
