@@ -180,6 +180,10 @@ urls = urls[:-1]
 urls = urls.encode()
 urls = base64.b64encode(urls).decode('unicode_escape')
 
+with open("urls.txt", "w", encoding='utf-8') as f:
+    f.write(urls)
+    print("index.html 已生成！")
+
 urls = update_time + urls + "\n```"
 
 print(urls[:25])
