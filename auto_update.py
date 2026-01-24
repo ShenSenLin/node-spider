@@ -2,6 +2,7 @@ import os
 import time
 
 os.system('pip install -r requirements-linux.txt')
+os.system('git pull')
 
 def cleanscreen():
     if os.name == 'nt':
