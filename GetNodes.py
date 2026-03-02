@@ -248,7 +248,7 @@ file_time = now.strftime("%Y%m%d%H%M%S.txt")
 with open("index.html", "r", encoding = "utf-8") as pre:
     with open("history/"+file_time, "w", encoding = "utf-8") as cur:
         cur.write(pre.read())
-
+print("已保存到History！")
 
 with open("index.html", "w", encoding='utf-8') as f:
     f.write(urls)
@@ -261,3 +261,6 @@ print(urls[:25])
 with open("README.md", "w", encoding='utf-8') as f:
     f.write(urls)
     print("README.md 已生成！")
+
+print("展示输出...")
+time.sleep(5)
