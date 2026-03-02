@@ -120,7 +120,7 @@ def init_driver():
         sys.exit()
 
 def init_time():
-    global lt, tm_mon, tm_mday, update_time
+    global lt, tm_mon, tm_mday, update_time, now
     
     lt = time.localtime(time.time())
     tz = pytz.timezone("Asia/Shanghai")
@@ -242,6 +242,13 @@ urls = urls[:-1]
 # B64 encode
 urls = urls.encode()
 urls = base64.b64encode(urls).decode('unicode_escape')
+
+# Save previous file
+file_time = now.strftime("%Y%m%d%H%M%S.txt")
+with open("index.html", "r", encoding = "utf-8") as pre:
+    with open("history/"+file_time, "w", encoding = "utf-8") as cur:
+        cur.write(pre.read())
+
 
 with open("index.html", "w", encoding='utf-8') as f:
     f.write(urls)
