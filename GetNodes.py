@@ -142,7 +142,7 @@ print("Get share urls...")
 
 #  ---  freeclashnode.com  ---  #
 # https://node.clashnode.cc/uploads/2025/01/0-20250121.txt
-for i in range(3):
+for i in range(1, 5):
     tmp = 'https://node.clashnode.cc/uploads/{0}/{1}/{3}-{0}{1}{2}.txt'.format(lt.tm_year, tm_mon, tm_mday, i)
     targets.append(tmp)
 print("freeclashnode.com has been banned!")
