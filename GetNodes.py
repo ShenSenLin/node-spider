@@ -35,6 +35,9 @@ targets = []
 enable_proxy = False
 proxy_setting = '--proxy-server=http://127.0.0.1:10808'
 
+# 历史
+enable_history = False
+
 # driver 
 driver = sys.argv[1] if len(sys.argv) > 1 else '3'
 
@@ -244,11 +247,13 @@ urls = urls.encode()
 urls = base64.b64encode(urls).decode('unicode_escape')
 
 # Save previous file
-file_time = now.strftime("%Y%m%d%H%M%S.txt")
-with open("index.html", "r", encoding = "utf-8") as pre:
-    with open("history/"+file_time, "w", encoding = "utf-8") as cur:
-        cur.write(pre.read())
-print("已保存到History！")
+if enable_hishtory:
+    file_time = now.strftime("%Y%m%d%H%M%S.txt")
+        with open("index.html", "r", encoding = "utf-8") as pre:
+            with open("history/"+file_time, "w", encoding = "utf-8") as cur:
+                cur.write(pre.read())
+    print("已保存到History！")
+else: print("已禁用History!")
 
 with open("index.html", "w", encoding='utf-8') as f:
     f.write(urls)
