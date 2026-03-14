@@ -1,5 +1,6 @@
 import os
 import time
+import gc
 
 os.system('pip install -r requirements-linux.txt')
 os.system('git pull')
@@ -21,5 +22,6 @@ while True:
     os.system('git commit -m "update"')
     os.system('git push')
     cleanscreen()
+    gc.collect()
 
     time.sleep(7200)
