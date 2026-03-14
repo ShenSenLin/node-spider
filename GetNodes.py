@@ -247,7 +247,7 @@ urls = urls.encode()
 urls = base64.b64encode(urls).decode('unicode_escape')
 
 # Save previous file
-if enable_hishtory:
+if enable_history:
     file_time = now.strftime("%Y%m%d%H%M%S.txt")
     with open("index.html", "r", encoding = "utf-8") as pre:
         with open("history/"+file_time, "w", encoding = "utf-8") as cur:
