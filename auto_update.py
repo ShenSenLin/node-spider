@@ -10,9 +10,6 @@ def cleanscreen():
         os.system('clr')
     else:    os.system('clear')
 
-if not os.path.exists("history"):
-    os.mkdir("history")
-
 while True:
     os.system('python ./GetNodes.py 3')
 
